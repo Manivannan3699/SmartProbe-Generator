@@ -120,8 +120,19 @@ ${examples.join(",")}
  "targets": [
 ${targets.join(",")}
  ]
-}''' % (${qid}.title,${qid}.r1.val,${uuidVars.join(",")})
+}''' % (${qid}.title,${qid}.val,${uuidVars.join(",")})
 </exec>`;
 
     document.getElementById("output").value = output;
 }
+["qid","objective","question","models","targets"].forEach(id => {
+
+    const el = document.getElementById(id);
+
+    el.value = localStorage.getItem(id) || "";
+
+    el.addEventListener("input", () => {
+        localStorage.setItem(id, el.value);
+    });
+
+});
