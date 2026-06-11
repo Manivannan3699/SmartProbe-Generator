@@ -1,60 +1,312 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title>SmartProbe Generator</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartProbe EXEC Generator</title>
 
 <style>
-body{
-    font-family:Arial;
-    margin:20px;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
+body{
+    background:#0f172a;
+    color:#f8fafc;
+    font-family:'Segoe UI',sans-serif;
+    height:100vh;
+    overflow:hidden;
+}
+
+.header{
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    background:#111827;
+    border-bottom:1px solid #334155;
+}
+
+.header h1{
+    font-size:22px;
+}
+
+.header span{
+    color:#94a3b8;
+    font-size:13px;
+}
+
+.main-layout{
+    display:flex;
+    height:calc(100vh - 60px);
+}
+
+.left-panel{
+    width:35%;
+    background:#111827;
+    border-right:1px solid #334155;
+    padding:15px;
+    overflow-y:auto;
+}
+
+.right-panel{
+    width:65%;
+    padding:15px;
+}
+
+.section{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:6px;
+    color:#cbd5e1;
+}
+
+input,
 textarea{
     width:100%;
-    height:200px;
-    margin-bottom:15px;
+    border:1px solid #334155;
+    border-radius:8px;
+    background:#1e293b;
+    color:white;
+    padding:10px;
+    font-size:13px;
 }
 
-input{
-    width:100%;
-    padding:8px;
-    margin-bottom:15px;
+input:focus,
+textarea:focus{
+    outline:none;
+    border-color:#3b82f6;
+}
+
+#qid{
+    height:42px;
+}
+
+#objective{
+    height:90px;
+}
+
+#question{
+    height:90px;
+}
+
+#models{
+    height:180px;
+}
+
+#targets{
+    height:180px;
+}
+
+.button-row{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
 }
 
 button{
-    padding:10px 20px;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.generate-btn{
+    background:#2563eb;
+    color:white;
+}
+
+.generate-btn:hover{
+    background:#1d4ed8;
+}
+
+.copy-btn{
+    background:#16a34a;
+    color:white;
+}
+
+.copy-btn:hover{
+    background:#15803d;
+}
+
+.output-container{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+}
+
+.output-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.output-header h3{
+    font-size:18px;
 }
 
 #output{
-    height:500px;
+    flex:1;
+    resize:none;
+    font-family:Consolas,monospace;
+    font-size:13px;
+    line-height:1.5;
+    background:#111827;
 }
+
+.info{
+    font-size:12px;
+    color:#94a3b8;
+    margin-top:4px;
+}
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#475569;
+    border-radius:20px;
+}
+
+@media(max-width:1000px){
+
+    body{
+        overflow:auto;
+    }
+
+    .main-layout{
+        flex-direction:column;
+        height:auto;
+    }
+
+    .left-panel,
+    .right-panel{
+        width:100%;
+    }
+
+    #output{
+        height:600px;
+    }
+}
+
 </style>
 </head>
 <body>
 
-<h2>SmartProbe Generator</h2>
+<div class="header">
+    <div>
+        <h1>SmartProbe EXEC Generator</h1>
+        <span>Build SmartProbes in seconds</span>
+    </div>
+</div>
 
-<label>Question ID</label>
-<input id="qid" value="">
+<div class="main-layout">
 
-<label>Prime Question</label>
-<textarea id="question"></textarea>
+    <!-- LEFT PANEL -->
 
-<label>Question Objective</label>
-<textarea id="objective"></textarea>
+    <div class="left-panel">
 
-<label>Training Models</label>
-<textarea id="models"></textarea>
+        <div class="section">
+            <label>Question ID</label>
+            <input
+                id="qid"
+                value="SCD_60B"
+                placeholder="SCD_60B">
+        </div>
 
-<label>Targeted Probing</label>
-<textarea id="targets"></textarea>
+        <div class="section">
+            <label>Question Objective</label>
+            <textarea
+                id="objective"
+                placeholder="Paste Question Objective"></textarea>
+        </div>
 
-<button onclick="generateExec()">Generate EXEC</button>
-<button onclick="copyExec()">Copy</button>
+        <div class="section">
+            <label>Prime Question</label>
+            <textarea
+                id="question"
+                placeholder="Paste Prime Question"></textarea>
+        </div>
 
-<h3>Output</h3>
-<textarea id="output"></textarea>
+        <div class="section">
+            <label>Training Models</label>
+
+            <textarea
+                id="models"
+                placeholder="Response=Probe"></textarea>
+
+            <div class="info">
+                Format:
+                Response=Probe
+            </div>
+        </div>
+
+        <div class="section">
+            <label>Targeted Probing</label>
+
+            <textarea
+                id="targets"
+                placeholder="Label=Detection Examples=Priority"></textarea>
+
+            <div class="info">
+                Format:
+                Label=Detection Examples=Priority
+            </div>
+        </div>
+
+        <div class="button-row">
+
+            <button
+                class="generate-btn"
+                onclick="generateExec()">
+
+                Generate EXEC
+
+            </button>
+
+            <button
+                class="copy-btn"
+                onclick="copyExec()">
+
+                Copy
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+
+    <div class="right-panel">
+
+        <div class="output-container">
+
+            <div class="output-header">
+                <h3>Generated EXEC</h3>
+            </div>
+
+            <textarea
+                id="output"
+                placeholder="Generated EXEC will appear here..."></textarea>
+
+        </div>
+
+    </div>
+
+</div>
 
 <script src="app.js"></script>
 
