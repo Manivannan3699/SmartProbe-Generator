@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SmartProbe Generator</title>
+
+<style>
+body{
+    font-family:Arial;
+    margin:20px;
+}
+
+textarea{
+    width:100%;
+    height:200px;
+    margin-bottom:15px;
+}
+
+input{
+    width:100%;
+    padding:8px;
+    margin-bottom:15px;
+}
+
+button{
+    padding:10px 20px;
+}
+
+#output{
+    height:500px;
+}
+</style>
+</head>
+<body>
+
+<h2>SmartProbe Generator</h2>
+
+<label>Question ID</label>
+<input id="qid" value="">
+
+<label>Prime Question</label>
+<textarea id="question"></textarea>
+
+<label>Question Objective</label>
+<textarea id="objective"></textarea>
+
+<label>Training Models</label>
+<textarea id="models"></textarea>
+
+<label>Targeted Probing</label>
+<textarea id="targets"></textarea>
+
+<button onclick="generateExec()">Generate EXEC</button>
+<button onclick="copyExec()">Copy</button>
+
+<h3>Output</h3>
+<textarea id="output"></textarea>
+
+<script src="app.js"></script>
+
+</body>
+</html>
