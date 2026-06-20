@@ -80,17 +80,18 @@ function generateExec(){
         let probeId =
             `${qid}_probe_1${String.fromCharCode(letterCode++)}`;
 
-        targets.push(`
- {
-    "id": "%s_${probeId}",
-    "label": "${label}",
-    "priority": ${priority},
-    "detection_examples": [
-      ${detection}
-    ],
-    "action": "TRIGGER_ON_DETECTION"
-  }`);
+	 targets.push(`
+	{
+	    "id": "%%s_${probeId}",
+	    "label": "${label}",
+	    "priority": ${priority},
+	    "detection_examples": [
+	      ${detection}
+	    ],
+	    "action": "TRIGGER_ON_DETECTION"
+	}`);
     });
+	
 
     let uuidVars = [];
 
