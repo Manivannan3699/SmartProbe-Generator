@@ -82,7 +82,7 @@ function generateExec(){
 
 	 targets.push(`
 	{
-	    "id": "MANI_TEST_${probeId}",
+	    "id": "%s_${probeId}",
 	    "label": "${label}",
 	    "priority": ${priority},
 	    "detection_examples": [
