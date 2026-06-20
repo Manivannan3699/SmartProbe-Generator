@@ -78,11 +78,11 @@ function generateExec(){
         let priority = parts[2].trim();
 
         let probeId =
-            `%s_${qid}_probe_1${String.fromCharCode(letterCode++)}`;
+            `${qid}_probe_1${String.fromCharCode(letterCode++)}`;
 
         targets.push(`
  {
-    "id": "${probeId}",
+    "id": "%s_${probeId}",
     "label": "${label}",
     "priority": ${priority},
     "detection_examples": [
